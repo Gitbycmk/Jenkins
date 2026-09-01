@@ -7,6 +7,9 @@ pipeline {
     environment {
         COURSE = "Jenkins"
     }
+    options {
+        timeout(time: 10, unit: 'SECONDS')
+    }
     stages {
         stage('Build') { 
             steps {
@@ -14,6 +17,7 @@ pipeline {
                     sh """
                         echo "Building"
                         echo $COURSE
+                        sleep 10
                         env
                     """
                 }
@@ -43,11 +47,14 @@ pipeline {
             echo 'I will always say Hello again'
             cleanWs()
         }
-        success{
+        success {
             echo 'I will run if success'
         }
-        failure{
+        failure {
             echo 'I will run if failure'
+        }
+        aborted {
+            echo 'Pipeline is Aborted'
         }
     }
 }
